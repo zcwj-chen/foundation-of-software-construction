@@ -1,0 +1,15 @@
+E:\codes\csharp\sc\assignment2\ConsoleApp4\bin\Debug\net6.0\ConsoleApp4.exe
+E:\codes\csharp\sc\assignment2\ConsoleApp4\bin\Debug\net6.0\ConsoleApp4.deps.json
+E:\codes\csharp\sc\assignment2\ConsoleApp4\bin\Debug\net6.0\ConsoleApp4.runtimeconfig.json
+E:\codes\csharp\sc\assignment2\ConsoleApp4\bin\Debug\net6.0\ConsoleApp4.dll
+E:\codes\csharp\sc\assignment2\ConsoleApp4\bin\Debug\net6.0\ConsoleApp4.pdb
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.csproj.AssemblyReference.cache
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.GeneratedMSBuildEditorConfig.editorconfig
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.AssemblyInfoInputs.cache
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.AssemblyInfo.cs
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.csproj.CoreCompileInputs.cache
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.dll
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\refint\ConsoleApp4.dll
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.pdb
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ConsoleApp4.genruntimeconfig.cache
+E:\codes\csharp\sc\assignment2\ConsoleApp4\obj\Debug\net6.0\ref\ConsoleApp4.dll
