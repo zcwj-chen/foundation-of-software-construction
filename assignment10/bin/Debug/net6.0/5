@@ -1,0 +1,655 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>iShare_爱分享 - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/isharetech" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=22aBlxLxM3CErNzn75a0-VjXxP1bUWs59o5gqlkic6c" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/bluesky/bundle-bluesky.min.css?v=lo-qMqmkpdSHTO-xuvJh3pX2jBcEL-8eFGAkZU09C9o" />
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/bluesky/bundle-bluesky-mobile.min.css?v=GPWRoqT__Jfst81JIPwAwYwmq5SYQ_qclH12VLgT5dM" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/isharetech/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/isharetech/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/isharetech/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 820696;
+        var currentBlogApp = 'isharetech';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BlueSky';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=_rgYy_Ast9OXsi6wUe-bs6yfIeNUXXp3RoYNNDYFsc0"></script>
+    
+</head>
+<body class="skin-bluesky has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/18094172" onclick="countCreativeClicks('M2-博客园-鼠标垫')" rel="nofollow">
+                    <img src="https://img2024.cnblogs.com/blog/35695/202401/35695-20240115080910898-1157541931.jpg" alt="" onload="countCreativeImpressionsOnMobile('M2-博客园-鼠标垫')" />
+                    <span id="m2_impression" style="display:none"></span>
+                </a>
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://cnblogs.vip/store">周边</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ai.hanghang.com/page/4649915" target="_blank">AI培训</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'isharetech', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/isharetech/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/isharetech">isharetech</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/isharetech/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/iShare_%E7%88%B1%E5%88%86%E4%BA%AB">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/isharetech/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18154673">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/24">2024年4月24日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18154673">
+    <span>
+        深度解读《深度探索C++对象模型》之C++虚函数实现分析（二）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18154673">
+摘要：        
+本系列深入分析编译器对于C++虚函数的底层实现，最后分析C++在多态的情况下的性能是否有受影响，多态究竟有多大的性能损失。    <a href="https://www.cnblogs.com/isharetech/p/18154673" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-24 11:18
+iShare_爱分享
+<span data-post-id="18154673" class="post-view-count">阅读(132)</span> 
+<span data-post-id="18154673" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18154673" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18154673" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18153369">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/23">2024年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18153369">
+    <span>
+        深度解读《深度探索C++对象模型》之C++虚函数实现分析（一）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18153369">
+摘要：        
+本系列深入分析编译器对于C++虚函数的底层实现，最后分析C++在多态的情况下的性能是否有受影响，多态究竟有多大的性能损失。    <a href="https://www.cnblogs.com/isharetech/p/18153369" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-23 17:29
+iShare_爱分享
+<span data-post-id="18153369" class="post-view-count">阅读(105)</span> 
+<span data-post-id="18153369" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18153369" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18153369" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18150815">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/22">2024年4月22日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18150815">
+    <span>
+        深度解读《深度探索C++对象模型》之数据成员的存取效率分析（三）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18150815">
+摘要：        
+C++对象在经过类的封装后，存取对象中的数据成员的效率是否相比C语言的结构体访问效率要低下？本篇将从C++类的不同定义形式来一一分析C++对象的数据成员的访问在编译器中是如何实现的，以及它们的存取效率如何？    <a href="https://www.cnblogs.com/isharetech/p/18150815" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-22 16:04
+iShare_爱分享
+<span data-post-id="18150815" class="post-view-count">阅读(120)</span> 
+<span data-post-id="18150815" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18150815" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18150815" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18148736">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/21">2024年4月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18148736">
+    <span>
+        深度解读《深度探索C++对象模型》之数据成员的存取效率分析（二）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18148736">
+摘要：        
+C++对象在经过类的封装后，存取对象中的数据成员的效率是否相比C语言的结构体访问效率要低下？本篇将从C++类的不同定义形式来一一分析C++对象的数据成员的访问在编译器中是如何实现的，以及它们的存取效率如何？    <a href="https://www.cnblogs.com/isharetech/p/18148736" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-21 11:33
+iShare_爱分享
+<span data-post-id="18148736" class="post-view-count">阅读(137)</span> 
+<span data-post-id="18148736" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18148736" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18148736" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18147543">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/20">2024年4月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18147543">
+    <span>
+        深度解读《深度探索C++对象模型》之数据成员的存取效率分析（一）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18147543">
+摘要：        
+C++对象在经过类的封装后，存取对象中的数据成员的效率是否相比C语言的结构体访问效率要低下？本篇将从C++类的不同定义形式来一一分析C++对象的数据成员的访问在编译器中是如何实现的，以及它们的存取效率如何？    <a href="https://www.cnblogs.com/isharetech/p/18147543" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-20 11:54
+iShare_爱分享
+<span data-post-id="18147543" class="post-view-count">阅读(134)</span> 
+<span data-post-id="18147543" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18147543" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18147543" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18145338">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/19">2024年4月19日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18145338">
+    <span>
+        深度解读《深度探索C++对象模型》之返回值优化
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18145338">
+摘要：        
+返回值优化是什么意思？编译器在什么情况下会启用返回值优化，返回值优化能获得多少性能的提升？它有什么优缺点？本篇将从背后的机制来深入分析。    <a href="https://www.cnblogs.com/isharetech/p/18145338" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-19 10:54
+iShare_爱分享
+<span data-post-id="18145338" class="post-view-count">阅读(153)</span> 
+<span data-post-id="18145338" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18145338" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18145338" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18143254">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/18">2024年4月18日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18143254">
+    <span>
+        深入分析C++对象模型之移动构造函数
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18143254">
+摘要：        
+C++11新标准中最重要的特性之一就是引入了支持对象移动的能力，移动语义的加持使得移动一个如容器之类的大对象的成本可以像复制一个指针一样低廉了，于是出现了各种各样的传言：如编译器会使用移动操作来替代拷贝操作以获得效率上的提升，甚至说将符合C++98标准的以前的老代码用符合C++11新标准的编译器重新编译一次，一行代码未改即可获得运行速度上质的提升。对于种种传闻，事实上是否如此？    <a href="https://www.cnblogs.com/isharetech/p/18143254" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-18 12:07
+iShare_爱分享
+<span data-post-id="18143254" class="post-view-count">阅读(145)</span> 
+<span data-post-id="18143254" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18143254" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18143254" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18140342">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/17">2024年4月17日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18140342">
+    <span>
+        深度解读《深度探索C++对象模型》之拷贝构造函数
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18140342">
+摘要：        
+C++的拷贝构造函数什么时候会被生成出来？它完成了哪些功能？本篇将从编译器的角度出发，结合编译器生成的汇编代码，深入分析什么情况下编译器会生成一个拷贝构造函数，以及拷贝构造函数里面做了什么事情。    <a href="https://www.cnblogs.com/isharetech/p/18140342" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-17 12:48
+iShare_爱分享
+<span data-post-id="18140342" class="post-view-count">阅读(181)</span> 
+<span data-post-id="18140342" class="post-comment-count">评论(2)</span> 
+<span data-post-id="18140342" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18140342" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18138901">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/16">2024年4月16日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18138901">
+    <span>
+        深度解读《深度探索C++对象模型》之默认构造函数
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18138901">
+摘要：        
+C++的默认构造函数的作用是什么？什么时候会需要一个默认构造函数，以及默认构造函数从哪里来？这篇文章将从编译器的角度来分析这个问题。    <a href="https://www.cnblogs.com/isharetech/p/18138901" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-16 18:18
+iShare_爱分享
+<span data-post-id="18138901" class="post-view-count">阅读(139)</span> 
+<span data-post-id="18138901" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18138901" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18138901" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18135696">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/isharetech/p/archive/2024/04/15">2024年4月15日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18135696">
+    <span>
+        深度解读《深度探索C++对象模型》之C++对象的内存布局
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18135696">
+摘要：        
+C++语言相比C语言最重要的功能就是支持面向对象编程，为了实现面向对象编程，C++增加了类的封装和多态、继承等特性，那么这些特性的加入是否会造成对象的内存成本增加？如果增加了，那么到底增加了多少？    <a href="https://www.cnblogs.com/isharetech/p/18135696" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-04-15 12:22
+iShare_爱分享
+<span data-post-id="18135696" class="post-view-count">阅读(297)</span> 
+<span data-post-id="18135696" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18135696" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18135696" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/isharetech?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 iShare_爱分享
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8C838EyK0EpKpQQcC9VwxBmp0LAd3fPLFfnNgND1Mu1Na8uO2a28KmwR4QtGndjrtnK7vcVlY4bcuOr3XDjoBt4LNHTRykaxQaaa0L_D96ONzp3yGToYNa2A9fi64rq1v5kpQ7c3JYJbDeyChctsZ8U" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

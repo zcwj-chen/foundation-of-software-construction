@@ -1,0 +1,15 @@
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.csproj.AssemblyReference.cache
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.GeneratedMSBuildEditorConfig.editorconfig
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.AssemblyInfoInputs.cache
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.AssemblyInfo.cs
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.csproj.CoreCompileInputs.cache
+E:\codes\csharp\sc\assignment10\bin\Debug\net6.0\assignment10.exe
+E:\codes\csharp\sc\assignment10\bin\Debug\net6.0\assignment10.deps.json
+E:\codes\csharp\sc\assignment10\bin\Debug\net6.0\assignment10.runtimeconfig.json
+E:\codes\csharp\sc\assignment10\bin\Debug\net6.0\assignment10.dll
+E:\codes\csharp\sc\assignment10\bin\Debug\net6.0\assignment10.pdb
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.dll
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\refint\assignment10.dll
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.pdb
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\assignment10.genruntimeconfig.cache
+E:\codes\csharp\sc\assignment10\obj\Debug\net6.0\ref\assignment10.dll

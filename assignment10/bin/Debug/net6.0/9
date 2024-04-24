@@ -1,0 +1,770 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="C&#x2B;&#x2B;语言相比C语言最重要的功能就是支持面向对象编程，为了实现面向对象编程，C&#x2B;&#x2B;增加了类的封装和多态、继承等特性，那么这些特性的加入是否会造成对象的内存成本增加？如果增加了，那么到底增加了多少？" />
+    <meta property="og:description" content="C&#x2B;&#x2B;语言相比C语言最重要的功能就是支持面向对象编程，为了实现面向对象编程，C&#x2B;&#x2B;增加了类的封装和多态、继承等特性，那么这些特性的加入是否会造成对象的内存成本增加？如果增加了，那么到底增加了多少？" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>深度解读《深度探索C++对象模型》之C++对象的内存布局 - iShare_爱分享 - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/isharetech/p/18135696" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=22aBlxLxM3CErNzn75a0-VjXxP1bUWs59o5gqlkic6c" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/bluesky/bundle-bluesky.min.css?v=lo-qMqmkpdSHTO-xuvJh3pX2jBcEL-8eFGAkZU09C9o" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/bluesky/bundle-bluesky-mobile.min.css?v=GPWRoqT__Jfst81JIPwAwYwmq5SYQ_qclH12VLgT5dM" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/isharetech/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/isharetech/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/isharetech/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 820696;
+        var currentBlogApp = 'isharetech';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BlueSky';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 18135696;
+            window.currentPostDateAdded = '2024-04-15 12:22';
+        </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=_rgYy_Ast9OXsi6wUe-bs6yfIeNUXXp3RoYNNDYFsc0"></script>
+    
+</head>
+<body class="skin-bluesky has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/18094172" onclick="countCreativeClicks('M2-博客园-鼠标垫')" rel="nofollow">
+                    <img src="https://img2024.cnblogs.com/blog/35695/202401/35695-20240115080910898-1157541931.jpg" alt="" onload="countCreativeImpressionsOnMobile('M2-博客园-鼠标垫')" />
+                    <span id="m2_impression" style="display:none"></span>
+                </a>
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://cnblogs.vip/store">周边</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ai.hanghang.com/page/4649915" target="_blank">AI培训</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'isharetech', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/isharetech/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/isharetech">isharetech</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/isharetech/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/iShare_%E7%88%B1%E5%88%86%E4%BA%AB">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/isharetech/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                <a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/isharetech/p/18135696" title="发布于 2024-04-15 12:22">
+    <span role="heading" aria-level="2">深度解读《深度探索C++对象模型》之C++对象的内存布局</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        C++语言相比C语言最重要的功能就是支持面向对象编程，为了实现面向对象编程，C++增加了类的封装和多态、继承等特性，那么这些特性的加入是否会造成对象的内存成本增加？如果增加了，那么到底增加了多少？
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<p>在C语言中，数据和数据的处理操作（函数）是分开声明的，在语言层面并没有支持数据和函数的内在关联性，我们称之为过程式编程范式或者程序性编程范式。C++兼容了C语言，当然也支持这种编程范式。但C++更主要的特点在支持基于对象（object-based, OB）和面向对象（object-oriented, OO），OB和OO的基础是对象封装，所谓封装就是将数据和数据的操作（函数）组织在一起，在语言层面保证了数据的访问和操作的一致性，这样从代码上更能表现出数据和函数的关系。在这里先不讨论在软件工程上这几种编程范式的优劣，我们先来分析对象加上封装后的内存布局，C++相对于C语言是否需要占用更多的内存空间，如果有，那么到底增加了多少内存成本？本文接下来将对各种情形进行分析。</p>
+<h3 id="空对象的内存布局">空对象的内存布局</h3>
+<p>请看下面的代码，你觉得答案应该输出多少？</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class Object {
+    // empty
+};
+
+int main() {
+    Object object;
+    cout &lt;&lt; "The size of object is: " &lt;&lt; sizeof(object) &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<p>答案是会输出：The size of object is: 1，是的，答案是1字节。在C++中，即使是空对象也会占用一定的空间，通常是1个字节。这个字节用来确保每个对象都有唯一的地址，以便在程序中进行操作。</p>
+<h3 id="含有数据成员的对象的内存布局">含有数据成员的对象的内存布局</h3>
+<ul>
+<li><strong>非静态数据成员</strong></li>
+</ul>
+<p>现在再往这个类里面加入一些非静态的数据成员，来看看加入非静态的数据成员之后内存布局占用多少空间。</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class Object {
+public:
+    int a;
+    int b;
+};
+
+int main() {
+    Object object;
+    cout &lt;&lt; "The size of object is: " &lt;&lt; sizeof(object) &lt;&lt; endl;
+    cout &lt;&lt; "The address of object: " &lt;&lt; &amp;object &lt;&lt; endl;
+    cout &lt;&lt; "The address of object.a: " &lt;&lt; &amp;object.a &lt;&lt; endl;
+    cout &lt;&lt; "The address of object.b: " &lt;&lt; &amp;object.b &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<p>运行结果输出的是：</p>
+<pre><code class="language-text">The size of object is: 8
+The address of object: 0x16f07f464
+The address of object.a: 0x16f07f464
+The address of object.b: 0x16f07f468
+</code></pre>
+<p>现在object对象总共占用了8字节。int类型在我测试的机器上占用4字节的空间，这个跟测试的机器有关，有的机器有可能是8字节，在一些很老的机器上也有可能是2字节。</p>
+<p>看后面三行的地址，可以看出，数据成员a的地址跟对象的地址是一样的，也就是说它是排列在对象的开始处，接下来是隔了4个字节后的地址，也就是数据成员b的地址，这说明数据成员a和b是顺序且紧密排列在一起的，并且是从对象的起始处开始的。结果表明，在这种情况下，C++的对象的内存布局跟C语言的结构的内存布局是一样的，并不会比C语言多占用一些内存空间。</p>
+<ul>
+<li><strong>静态数据成员</strong></li>
+</ul>
+<p>C++的类也支持在类里面定义静态数据成员，那么定义了静态数据成员之后类对象的内存布局是怎么样的呢？在上面的类中加入一个静态数据成员，如以下代码：</p>
+<pre><code class="language-c++">class Object {
+public:
+    int a;
+    int b;
+    static int static_a;
+};
+</code></pre>
+<p>运行结果输出：</p>
+<pre><code class="language-text">The size of object is: 8
+The address of object: 0x16b25f464
+The address of object.a: 0x16b25f464
+The address of object.b: 0x16b25f468
+The address of object.static_a: 0x104ba8000
+</code></pre>
+<p>对象的大小结果还是8字节，说明静态成员变量并不会增加对象的内存占用空间。看下它们各个的地址，从结果可以看出，静态成员变量的地址跟非静态成员变量的地址相差很大，推断肯定不是和它们排列在一起的。在main函数中增加如下代码：</p>
+<pre><code class="language-c++">Object obj2;
+cout &lt;&lt; "The size of obj2 is: " &lt;&lt; sizeof(obj2) &lt;&lt; endl;
+cout &lt;&lt; "The address of obj2.static_a: " &lt;&lt; &amp;obj2.static_a &lt;&lt; endl;
+</code></pre>
+<p>输出结果为：</p>
+<pre><code class="language-text">The size of obj2 is: 8
+The address of obj2.static_a: 0x104ba8000
+</code></pre>
+<p>定义了第2个对象，这个对象的大小也还是8字节，说明静态对象不是存储在每个对象中的，而是存在某个地方，由所有的同一个的类对象所共有的。从第2行输出的地址可以看出来，它的地址和第1个对象输出的地址是一样的，说明它们指向的是同一个变量。其实类中的静态数据成员是和全局变量一样存放在数据段中的，它的地址是在编译的时候就已经确定的了，每次运行都是一样的。它和全局变量一样，地址在编译时确定，所以访问它没有任何性能损失，和全局变量的区别是它的作用域不一样，类的静态数据成员的作用域只有在类中可见，访问权限受它在类中定义时的访问权限区段所控制。</p>
+<h3 id="含有成员函数的对象的内存布局">含有成员函数的对象的内存布局</h3>
+<p>上面所讨论的都是类里面只有数据成员的情况，如果在类里再加上成员函数时，类对象的内存布局会有什么变化？在类中增加一个public的成员函数和一个静态成员函数，代码修改如下：</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+
+class Object {
+public:
+    void print() {
+        cout &lt;&lt; "The address of a: " &lt;&lt; &amp;a &lt;&lt; endl;
+        cout &lt;&lt; "The address of b: " &lt;&lt; &amp;b &lt;&lt; endl;
+        cout &lt;&lt; "The address of static_a: " &lt;&lt; &amp;static_a &lt;&lt; endl;
+    }
+
+    static void static_func() {
+        cout &lt;&lt; "This is a static member function.\n";
+    }
+
+private:
+    int a;
+    int b;
+    static int static_a;
+};
+
+int Object::static_a = 1;
+
+int main() {
+    Object object;
+    cout &lt;&lt; "The size of object is: " &lt;&lt; sizeof(object) &lt;&lt; endl;
+    printf("The address of print: %p\n", &amp;Object::print);
+    printf("The address of static_func: %p\n", &amp;Object::static_func);
+    object.print();
+    object.static_func();
+
+    return 0;
+}
+</code></pre>
+<p>运行输出结果如下：</p>
+<pre><code class="language-text">The size of object is: 8
+The address of print: 0x102d93120
+The address of static_func: 0x102d931c4
+The address of a: 0x16d06f464
+The address of b: 0x16d06f468
+The address of static_a: 0x102d98000
+This is a static member function.
+</code></pre>
+<p>类对象的大小还是没变，还是8字节。说明增加成员函数并没有增加类对象的内存占用，无论是普通成员函数还是静态成员函数都一样。其实类中的成员函数并不存储在每个类对象中的，而是跟类的定义相关的，它是存放在可执行二进制文件中的代码段里的，由同一个类所产生出来的所有对象所共享。从上面输出结果中两个函数的地址来看，它们的地址很相近，说明普通成员函数和静态成员函数都是一样的，都存放在代码段中，地址在编译时就已确定。调用它们跟调用一个普通的函数没有什么区别，不会有性能上的损失。</p>
+<h3 id="含有虚函数的对象的内存布局">含有虚函数的对象的内存布局</h3>
+<p>面向对象主要的特征之一就是多态，而多态的基础就是支持虚函数的机制。那么虚函数的支持对对象的内存布局会产生什么影响呢？这里先不分析虚函数的实现机制，我们先来分析内存布局的成本。在上面的例子中加入两个虚函数：一个普通的虚函数和虚析构函数，代码如下：</p>
+<pre><code class="language-c++">virtual ~Object() {
+    cout &lt;&lt; "Destructor...\n";
+}
+
+virtual void virtual_func() {
+    cout &lt;&lt; "Call virtual_func\n";
+}
+
+// 在main函数里增加两行打印
+printf("The address of object: %p\n", &amp;object);
+printf("The address of virtual_func: %p\n", &amp;Object::virtual_func);
+</code></pre>
+<p>编译运行，看看输出：</p>
+<pre><code class="language-text">The size of object is: 16
+The address of object: 0x16f97f458
+The address of print: 0x100482f74
+The address of static_func: 0x10048301c
+The address of virtual_func: 0x10
+The address of a: 0x16f97f460
+The address of b: 0x16f97f464
+The address of static_a: 0x100488000
+Destructor...
+</code></pre>
+<p>在没有增加任何数据成员的情况下，对象的大小增加到了16字节，这说明虚函数的加入改变了对象的内存布局。那么增加的内容是什么呢？我们看到输出的打印中对象的首地址为0x16f97f458，而数据成员a的地址为0x16f97f460，这中间刚好差了8字节。而从上面的分析我们知道，原来a的地址是和对象的首地址是一样的，也就是说对象的内存布局是从a开始排列的，而现在在对象的起始地址和成员变量a之间空了8个字节，那么排在a之前的这8个字节的内容是什么呢？我们加点代码把它的内容输出出来，在main函数中加入以下代码：</p>
+<pre><code class="language-c++">long* p =  (long*)&amp;object;
+long* vptr = (long*)*p;
+printf("vptr is %p\n", vptr);
+</code></pre>
+<p>输出结果：</p>
+<pre><code class="language-text">The size of object is: 16
+The address of object: 0x16b00f458
+The address of print: 0x104df2f68
+The address of static_func: 0x104df3010
+The address of virtual_func: 0x10
+The address of a: 0x16b00f460
+The address of b: 0x16b00f464
+The address of static_a: 0x104df8000
+vptr is 0x104df4110
+Destructor...
+</code></pre>
+<p>它的内容是0x104df4110，它其实是一个指针，在我的机器上占用8字节，在某些机器上可能是4字节。这个指针指向的其实是一个虚函数表，虚函数表是一个表格，表格里的每一项的内容存放的是每个虚函数的地址，这个地址指向虚函数真正的地址，在上面的打印中虚函数打印出来的地址是0x10，这个其实不是它的真正地址，是它在表格中的偏移地址。可以看到这个虚函数表地址和静态成员static_a的地址非常相近，其实虚函数表也是存放在数据段里面的，它在编译的时候由编译器确定好内容，并且编译器会自动扩充一些代码，在构造对象的时候把虚函数表的首地址插入到对象的起始位置。虚函数的详细分析在这里先不展开，后面再详细分析。从这里的分析可以看到，类里面增加虚函数，会在对象的起始位置上插入一个指针，对象的大小会增加一个指针的大小，为8字节或者4字节。如下面的示意图：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415121722753-1172381352.png" alt="image" loading="lazy"></p>
+<h3 id="继承体系下的对象的内存布局">继承体系下的对象的内存布局</h3>
+<p>继承是C++中很重要的一个功能，按照不同的形式有单一继承、多重继承、虚继承，按照继承权限有public、protected、private。下面我们一一来分析，为简单起见，我们只分析public继承。</p>
+<ul>
+<li><strong>单一继承</strong></li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+
+class point2d {
+public:
+    int x() { return x_; }
+    int y() { return y_; }
+protected:
+    int x_;
+    int y_;
+};
+
+class point3d: public point2d {
+public:
+    int z() { return z_; }
+
+    void print() {
+        printf("The address of x: %p\n", &amp;x_);
+        printf("The address of y: %p\n", &amp;y_);
+        printf("The address of z: %p\n", &amp;z_);
+    }
+protected:
+    int z_;
+};
+
+int main() {
+    point2d p2d;
+    point3d p3d;
+    cout &lt;&lt; "The size of p2d is: " &lt;&lt; sizeof(p2d) &lt;&lt; endl;
+    cout &lt;&lt; "The size of p3d is: " &lt;&lt; sizeof(p3d) &lt;&lt; endl;
+    cout &lt;&lt; "The address of p3d: " &lt;&lt; &amp;p3d &lt;&lt; endl;
+    p3d.print();
+
+    return 0;
+}
+</code></pre>
+<p>上面的代码编译运行输出：</p>
+<pre><code class="language-text">The size of p2d is: 8
+The size of p3d is: 12
+The address of p3d: 0x16d2bb458
+The address of x: 0x16d2bb458
+The address of y: 0x16d2bb45c
+The address of z: 0x16d2bb460
+</code></pre>
+<p>类point3d只有一个数据成员z_，但大小却有12字节，很明显它的大小是加上父类point2d的大小8字节的。从输出的地址看，p3d的地址是0x16d2bb458，从父类继承而来的x_的地址也是0x16d2bb458，这说明从父类继承而来的数据成员排列在前面，从对象的首地址开始，按照它们在类中的声明顺序依次排序，接着是子类自己的数据成员，从上面的结果看起来对象中的数据成员在内存中是按照顺序且紧凑的排列在一起的，如下图所示：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415121800562-684122381.png" alt="image" loading="lazy"><br>
+我们再来验证一下，把数据成员的声明类型改为char型，修改后输出结果：</p>
+<pre><code class="language-text">The size of p2d is: 2
+The size of p3d is: 3
+The address of p3d: 0x16ba63467
+The address of x: 0x16ba63467
+The address of y: 0x16ba63468
+The address of z: 0x16ba63469
+</code></pre>
+<p>看起来似乎我们的猜测是正确的，我们再继续修改，把x_改为int型，其它两个为char型，声明顺序还是跟之前一样，这次的输出结果：</p>
+<pre><code class="language-text">The size of p2d is: 8
+The size of p3d is: 12
+The address of p3d: 0x16d033458
+The address of x: 0x16d033458
+The address of y: 0x16d03345c
+The address of z: 0x16d033460
+</code></pre>
+<p>这次跟我们想要的结果不一样了，p2d的大小不是5字节而是8字节，p3d的大小不是6字节而是12字节，看起来编译器填充了内存空间使得他们的大小变大了。其实这时编译器为了访问效率选择了对齐，为了让变量的地址是4的倍数，它会填充中间的空挡，这些行为跟编译器有很大的关系，不同的编译器有不同的行为，类中数据成员的不同声明顺序和不同的数据类型可能就导致不同的结果。布局示意图如下：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415121927042-1986669684.png" alt="image" loading="lazy"></p>
+<ul>
+<li><strong>多重继承</strong></li>
+</ul>
+<p>接下来看看一个类继承了多个父类，它的内存布局是怎么样的。请看下面的代码：</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+
+class Base1 {
+public:
+    int b1;
+};
+
+class Base2 {
+public:
+    int b2;
+};
+
+class Derived: public Base1, public Base2 {
+public:
+    int d;
+    void print() {
+        printf("The address of b1: %p\n", &amp;b1);
+        printf("The address of b2: %p\n", &amp;b2);
+        printf("The address of d: %p\n", &amp;d);
+    }
+};
+
+int main() {
+    Derived obj;
+    printf("The size of obj is: %lu\n", sizeof(obj));
+    printf("The address of obj: %p\n", &amp;obj);
+    obj.print();
+
+    return 0;
+}
+</code></pre>
+<p>输出结果：</p>
+<pre><code class="language-text">The size of obj is: 12
+The address of obj: 0x16f737460
+The address of b1: 0x16f737460
+The address of b2: 0x16f737464
+The address of d: 0x16f737468
+</code></pre>
+<p>对象的总大小是12字节，它是子类自身拥有的一个数据成员4字节加上分别从两个父类继承而来的两个数据成员共8字节的总和。从输出的地址可以看出来，从父类Base1继承来的成员b1和对象的首地址相同，接着是从父类Base2继承而来b2，最后是子类自己的成员d，说明对象的布局是从b1开始，然后是b2，最后是d，这个跟继承的顺序有关，第一继承而来的数据成员排在最前面，按照在类中声明的顺序依次排列，其次是第二继承而来的数据成员，以此类推，最后是子类自己的数据成员。布局示意图如下：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415121953196-1240146176.png" alt="image" loading="lazy"></p>
+<ul>
+<li><strong>父类带虚函数的继承</strong></li>
+</ul>
+<p>如果父类中带有虚函数，那么对子类的内存布局有何影响？在上面的代码中的两个父类各加上一个虚函数，而子类暂时先不加虚函数，如下代码：</p>
+<pre><code class="language-c++">// 在class Base1中加入以下代码
+virtual void virtual_func1() {
+    printf("This is virtual_func1\n");
+}
+
+// 在class Base2中加入以下代码
+virtual void virtual_func2() {
+    printf("This is virtual_func2\n");
+}
+</code></pre>
+<p>编译运行，输出结果：</p>
+<pre><code class="language-text">The size of obj is: 32
+The address of obj: 0x16b807448
+The address of b1: 0x16b807450
+The address of b2: 0x16b807460
+The address of d: 0x16b807464
+</code></pre>
+<p>这次对象的大小竟然是32字节，比上面的例子增加了20字节，这里并没有增加任何数据成员，只是仅仅在父类增加了虚函数，根据上面的分析，增加虚函数会引入虚函数表指针，指针占8字节的大小，那为什么会增加这么多呢？我们可以借助工具来分析一下，编译器一般会提供一些辅助分析工具供开发人员使用，其中有一个功能是把每个类的布局给打印出来，gcc、clang、vs都有类似的命令，clang可以使用下面的命令来查看：</p>
+<pre><code class="language-base">clang -Xclang -fdump-record-layouts -stdlib=libc++ -std=c++11 -c filename.cpp
+</code></pre>
+<p>输出的结果很多，我截取关键的一部分：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415122013662-1314565329.png" alt="image" loading="lazy"><br>
+上图中，左边的数字就是对象的成员相对于对象的起始地址的偏移量。从上图我们可以得出以下的结论：</p>
+<p>1.父类中各有一个虚函数表以及一个指向它的虚函数表指针，子类分别从父类中继承下来，父类有多少个虚函数表，子类就有多少个虚函数表。这里额外插一句，子类虽然继承了父类的虚函数表，但子类的虚函数表不会和父类的虚函数表是同一个，就算子类没有覆盖父类的任何虚函数，编译器也会复制多一份虚函数表出来，尽管它们的虚函数表的内容是一模一样的，但是一般情况下子类都会覆盖父类的虚函数，不然也没有必要用虚函数了，虚函数具体的分析以后再讲。</p>
+<p>2.编译器为了访问效率选择了8字节的对齐，也就是说成员变量b1占了8字节，数据本身占了4字节，为了对齐填充了4字节，使得下一个虚函数表指针可以对齐访问。</p>
+<p>所以，分析的结论就是子类对象的内存布局是这样的，首先是从Base1父类继承来的虚函数表指针，占用8字节，接着是继承来的b1成员变量，加上填充的4字节共占用了8字节，再接着是从父类Base2继承来的虚函数表指针，占用8字节，之后是继承的b2成员变量，占用4字节，子类自己的成员变量d紧跟着排列在后面，总共32字节。布局示意图如下：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415122033174-668005159.png" alt="image" loading="lazy"></p>
+<h3 id="虚继承的对象的内存布局">虚继承的对象的内存布局</h3>
+<p>虚继承是为了解决棱形继承情形下重复继承的问题提出来的解决办法，如下面的代码：</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+
+class Grand {
+    int a;
+};
+
+class Base1: public Grand {
+};
+
+class Base2: public Grand {
+};
+
+class Derived: public Base1, public Base2 {
+};
+
+int main() {
+    Grand g;
+    Base1 b1;
+    Base2 b2;
+    Derived obj;
+    //obj.a = 1;	// 这行编译不过。
+    printf("The size of g is: %lu\n", sizeof(g));
+    printf("The size of b1 is: %lu\n", sizeof(b1));
+    printf("The size of b2 is: %lu\n", sizeof(b2));
+    printf("The size of obj is: %lu\n", sizeof(obj));
+    return 0;
+}
+</code></pre>
+<p>上面的代码中如果不把第23行代码屏蔽掉是编译不过的，因为Base1和Base2都继承了Grand，Derived又继承了Base1和Base2，Grand中的成员a将会被重复继承两次，这时在子类Derived中就存在了两个成员a，这时从Derived访问a就会出现错误，因为编译器不知道你要访问的是哪一个a，出现了名字冲突的问题。屏蔽掉第23行后编译运行，看下输出结果：</p>
+<pre><code class="language-text">The size of g is: 4
+The size of b1 is: 4
+The size of b2 is: 4
+The size of obj is: 8
+</code></pre>
+<p>从结果中也可以验证，子类Derived占了两倍的大小。为了解决像这种重复继承了两次的问题，办法是引入虚继承，我们修改下代码继续分析：</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+
+class Grand {
+public:
+    int a;
+};
+
+class Base1: virtual public Grand {
+public:
+    int b;
+};
+
+class Base2: virtual public Grand {
+public:
+    int c;
+};
+
+class Derived: public Base1, public Base2 {
+public:
+    int d;
+};
+
+int main() {
+    Grand g;
+    Base1 b1;
+    Base2 b2;
+    Derived obj;
+    obj.a = 1;
+    printf("The size of g is: %lu\n", sizeof(g));
+    printf("The size of b1 is: %lu\n", sizeof(b1));
+    printf("The size of b2 is: %lu\n", sizeof(b2));
+    printf("The size of obj is: %lu\n", sizeof(obj));
+    printf("The address of obj: %p\n", &amp;obj);
+    printf("The address of obj.a: %p\n", &amp;obj.a);
+    printf("The address of obj.b: %p\n", &amp;obj.b);
+    printf("The address of obj.c: %p\n", &amp;obj.c);
+    printf("The address of obj.d: %p\n", &amp;obj.d);
+    
+    return 0;
+}
+</code></pre>
+<p>这时访问Derived类的对象中的成员变量a就没有冲突了，如上面代码的第30行，上面代码的输出结果：</p>
+<pre><code class="language-text">The size of g is: 4
+The size of b1 is: 16
+The size of b2 is: 16
+The size of obj is: 40
+The address of obj: 0x16d70b420
+The address of obj.a: 0x16d70b440
+The address of obj.b: 0x16d70b428
+The address of obj.c: 0x16d70b438
+The address of obj.d: 0x16d70b43c
+</code></pre>
+<p>改为虚继承后，obj.a = 1;这行代码能编译通过了，不会出现名字冲突了。我们来看看孙子类Derived的对象的大小，竟然是40字节，增大了这么多，还是使用上面的命令来dump出对象的内存布局，结果如下图，截取部分：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415122053341-59355099.png" alt="image" loading="lazy"><br>
+这里先补充一点，虚继承是借助于虚基类表来实现，被虚继承的父类的成员变量会放在虚基类表中，通过在对象中插入的虚基类表指针来访问虚基类表，有点类似于虚函数表，实现方式不同的编译器采用不一样的方式，gcc和clang是虚函数表和虚基类表共用一个表，称为虚表，所以只需要一个指针指向它，叫做虚表指针，而Windows平台的Visual Studio是采用两个表，所以Windows下对象里会有两个指针，一个虚函数表指针和一个虚基类表指针，虚基类的实现细节后面再详细分析。</p>
+<p>从上图可以看到，孙子类Derived的对象的内存里拥有两个虚表指针，因为父类Base1和Base2分别虚继承了爷爷类Grand，每一个虚继承将会产生一个虚表指针，按照继承的顺序依次排列，首先是Base1子对象的内容，包含了一个虚表指针和成员变量b，b之后会填充4字节到8字节对齐，然后是Base2子对象的内容，同样也包含了一个虚表指针和成员变量c，再之后是孙子类Derived自己的成员变量d，它是紧凑的排列在c之后的，最后是爷爷类Grand中的成员变量a，可以看到虚继承下来的成员变量被安排到最后的位置了，从打印的地址也可以看出来。布局示意图如下：<br>
+<img src="https://img2024.cnblogs.com/blog/3423566/202404/3423566-20240415122105095-100556902.png" alt="image" loading="lazy"></p>
+<blockquote>
+<p>此篇文章同步发布于我的微信公众号：<a href="https://mp.weixin.qq.com/s/TS3STMEW--mO8HW5EmNzAg" target="_blank" rel="noopener">C++对象封装后的内存布局</a></p>
+<p>如果您感兴趣这方面的内容，请在微信上搜索公众号iShare爱分享或者微信号iTechShare并关注，以便在内容更新时直接向您推送。</p>
+</blockquote>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="5.395289835832176" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2024-04-19 11:06">2024-04-15 12:22</span>&nbsp;
+<a href="https://www.cnblogs.com/isharetech">iShare_爱分享</a>&nbsp;
+阅读(<span id="post_view_count">295</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18135696" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(18135696);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '18135696', targetLink: 'https://www.cnblogs.com/isharetech/p/18135696', title: '深度解读《深度探索C&#x2B;&#x2B;对象模型》之C&#x2B;&#x2B;对象的内存布局' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 18135696, cb_entryCreatedDate = '2024-04-15 12:22', cb_postType = 1, cb_postTitle = '深度解读《深度探索C++对象模型》之C++对象的内存布局';
+    var allowComments = true, cb_blogId = 820696, cb_blogApp = 'isharetech', cb_blogUserGuid = '358278a8-66bb-406e-f1ed-08dc4ae9e3bd';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav">
+            <a class="comment-nav-left forpc" href="https://cnblogs.vip/" target="_blank">会员力量，点亮园子希望</a>
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+        <div id="cnblogs_c1" class="under-post-card">
+            <a href="https://cnblogs.vip/buy" rel="nofollow" target="_blank" onclick="countCreativeClicks('C1-博客园-会员')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202403/35695-20240328092537879-1189167464.jpg" onload="countCreativeImpressions('C1-博客园-会员')" alt="" />
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"></div>
+        <div id="cnblogs_c2" class="under-post-card">
+            <a href="https://market.cnblogs.com/" rel="nofollow" target="_blank" onclick="countCreativeClicks('C2-阿里云-云市场')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202403/35695-20240309100232478-706935978.jpg" alt="" onload="countCreativeImpressions('C2-阿里云-云市场')" />
+            </a>
+        </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 iShare_爱分享
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8C838EyK0EpKpQQcC9VwxBlxq9spR9xnhy1XpS7zifP7pau09OVw8i-fxiU9Ky94iyezRBA7hdS20hlSjVudE7wdNvYw5NmbMmCIXqljfrTaJMMsvcAlCKMf3ER--Q4XWgw68NSFN2tnIJ3Qi3Ok2TA" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>
