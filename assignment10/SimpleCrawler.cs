@@ -16,7 +16,6 @@ namespace SimpleCrawler
     {
         private Hashtable urls = new Hashtable();
         private int count = 0;
-        private int threadNum = 5;    //线程数
         private static readonly object lockOBJ = new object();
         private int i = 1;
         static void Main(string[] args)
